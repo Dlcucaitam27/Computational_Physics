@@ -1,0 +1,30 @@
+SHELL := cmd.exe
+.SHELLFLAGS := /C
+
+CXX = g++
+CXXFLAGS = -Iinclude -Wall -O2
+SRC = src
+BIN = bin
+EXEC = $(BIN)\colisiones.exe
+
+.PHONY: all build run clean
+
+all: run
+
+build:
+	if not exist $(BIN) mkdir $(BIN)
+	if not exist results mkdir results
+	if not exist scripts mkdir scripts
+	@echo Compilando fuentes...
+	$(CXX) $(SRC)\mainf13.cpp $(SRC)\simulacion.cpp $(SRC)\graficar.cpp $(SRC)\animacion.cpp $(CXXFLAGS) -o $(EXEC)
+	@echo  Compilacion completada correctamente.
+
+run: build
+	@echo  Ejecutando simulacion...
+	$(EXEC)
+
+clean:
+	@if exist $(BIN) rmdir /S /Q $(BIN)
+	@if exist results rmdir /S /Q results
+	@if exist scripts rmdir /S /Q scripts
+	@echo  Limpieza completada.
